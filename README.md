@@ -1,24 +1,84 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column                | Type   | Options     |
+| --------------------- | ------ | ----------- |
+| nickname              | string | null: false |
+| email                 | string | null: false |
+| encrypted_password    | string | null: false |
+| name_kanji            | string | null: false |
+| name_katakana         | string | null: false |
+| birthday              | data   | null: false |
 
-* Ruby version
+### Association
 
-* System dependencies
+- has_many :items
+- has_many :comments
+- has_one :card
 
-* Configuration
+## items テーブル
 
-* Database creation
+| Column     | Type       | Options                        |
+| ---------- | ---------- | ------------------------------ |
+| name       | string     | null: false                    |
+| text       | text       | null: false                    |
+| category   | string     | null: false                    |
+| condition  | string     | null: false                    |
+| burden     | string     | null: false                    |
+| area       | string     | null: false                    |
+| days       | string     | null: false                    |
+| price      | string     | null: false                    |
+| user       | references | null: false, foreign_key: true |
+| card       | references | null: false, foreign_key: true |
 
-* Database initialization
 
-* How to run the test suite
+### Association
 
-* Services (job queues, cache servers, search engines, etc.)
+- belongs_to :user
+- belongs_to :card
+- has_many :comments
 
-* Deployment instructions
+## comments テーブル
 
-* ...
+
+| Column    | Type       | Options                        |
+| --------- | ---------- | ------------------------------ |
+| text      | text       | null: false                    |
+| user      | references | null: false, foreign_key: true |
+| item      | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :user
+- belongs_to :item
+
+## cards テーブル
+
+| Column    | Type       | Options                        |
+| --------- | ---------- | ------------------------------ |
+| number    | integer    | null: false                    |
+| date      | date       | null: false                    |
+| cord      | integer    | null: false                    |
+| user      | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :user
+- has_many :items
+- has_one :address
+
+## addresses テーブル
+
+| Column                | Type       | Options                        |
+| --------------------- | ---------- | ------------------------------ |
+| postal_code           | string     | null: false                    |
+| prefecture            | string     | null: false                    |
+| city                  | string     | null: false                    |
+| house_number          | string     | null: false                    |
+| building              | string     | null: false                    |
+| phone_number          | integer    | null: false                    |
+| card                  | references | null: false, foreign_key: true |
+
+### Association
+- belongs_to :card
