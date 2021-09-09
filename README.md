@@ -14,7 +14,6 @@
 ### Association
 
 - has_many :items
-- has_many :comments
 - has_one :card
 
 ## items テーブル
@@ -37,21 +36,6 @@
 
 - belongs_to :user
 - belongs_to :card
-- has_many :comments
-
-## comments テーブル
-
-
-| Column    | Type       | Options                        |
-| --------- | ---------- | ------------------------------ |
-| text      | text       | null: false                    |
-| user      | references | null: false, foreign_key: true |
-| item      | references | null: false, foreign_key: true |
-
-### Association
-
-- belongs_to :user
-- belongs_to :item
 
 ## cards テーブル
 
