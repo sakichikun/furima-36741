@@ -93,8 +93,6 @@ RSpec.describe User, type: :model do
         another_user = FactoryBot.build(:user, email: @user.email)
         another_user.valid?
         expect(another_user.errors.full_messages).to include('Email has already been taken')
-        @user.valid?
-
       end
 
       it 'passwordが5文字以下では登録できない' do
