@@ -17,5 +17,10 @@ class Item < ApplicationRecord
   validates :burden_id, numericality: { other_than: 1 , message: "can't be blank"} 
   validates :area_id, numericality: { other_than: 1 , message: "can't be blank"} 
   validates :scheduled_delivery_id, numericality: { other_than: 1 , message: "can't be blank"} 
-  validates :price, presence: true
+  validates :price, presence: true, length: {minimum: 3, maximum: 7}, 
+    numericality: { only_integer: true, grater_than: 300, less_than: 9999999 , message: "is out of setting range"}
+
+  with_options presence: true do
+    validates :price, format: {with: /\A[0-9]+\z/i, message: "is invalid. Input half-width characters"}
+  end
 end
