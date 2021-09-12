@@ -91,6 +91,60 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Price is out of setting range")
       end
 
+      it 'priceが半角英数混合では登録できない' do
+        @item.price = '12az'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is invalid. Input half-width characters")
+      end
+
+      it 'priceが半角英語だけでは登録できない' do
+        @item.price = 'hello'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is invalid. Input half-width characters")
+      end
+
+      it 'priceが10000000円以上では登録できない' do
+        @item.price = '100000000000'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is out of setting range")
+      end
+
+      it 'category_idに1が選択されている場合は出品できない' do
+        @item.category_id = '1'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Category can't be blank")
+      end
+
+      it 'condition_idに1が選択されている場合は出品できない' do
+        @item.condition_id = '1'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Condition can't be blank")
+      end
+
+      it 'burden_idに1が選択されている場合は出品できない' do
+        @item.burden_id = '1'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Burden can't be blank")
+      end
+
+      it 'area_idに1が選択されている場合は出品できない' do
+        @item.area_id = '1'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Area can't be blank")
+      end
+
+      it 'scheduled_delivery_idに1が選択されている場合は出品できない' do
+        @item.scheduled_delivery_id = '1'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Scheduled delivery can't be blank")
+      end
+
+      it 'userが紐付いていないと出品できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include('User must exist')
+      end
+
     end
   end
 end
