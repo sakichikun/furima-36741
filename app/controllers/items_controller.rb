@@ -22,6 +22,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @purchase = Purchase.new
   end
 
   def edit
