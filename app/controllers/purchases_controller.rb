@@ -1,8 +1,12 @@
 class PurchasesController < ApplicationController
+  before_action :authenticate_user!, only: :index
   before_action :set_item, only: [:index, :create]
 
   def index
     @purchase_address = PurchaseAddress.new
+    if @item.purchase.present? || current_user.id == @item.user_id
+      redirect_to root_path
+    end
   end
 
   def create
