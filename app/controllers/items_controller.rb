@@ -22,9 +22,13 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @purchase = Purchase.new
   end
 
   def edit
+    if @item.purchase.present?
+      redirect_to root_path
+    end
   end
 
   def update
